@@ -47,6 +47,20 @@ public class MainActivity extends AppCompatActivity {
         txtmensaje.setText(edtmensaje.getText().toString());
     }
 
+    public void enviar_3(View view) {
+        mSocket.emit("enviarmensaje", edtmensaje.getText().toString(), new Ack() {
+            @Override
+            public void call(Object... args) {
+                String res = (String) args[0];
+                if (res.equals("OK")) {
+                    Log.i("mimensaje", "Se envio correctamente");
+                } else
+                    Log.i("mimensaje", "Hubo error en el envio");
+            }
+        });
+        txtmensaje.setText(edtmensaje.getText().toString());
+    }
+
     private Emitter.Listener recibirmensaje = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
